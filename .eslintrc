@@ -1,0 +1,16 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "semi": 2,
+    "no-console": ["warn", allow: ["warn","error"] ],
+    "no-unused-vars": "off"
+  },
+  "plugins": [
+    "html"
+  ],
+}
+
