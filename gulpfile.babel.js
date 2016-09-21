@@ -11,13 +11,13 @@ gulp.Copy('copy', [
 ]);
 
 // HTML Replace CSS & JS Links
-gulp.Html('html', `${config.paths.src.html}/*`, config.paths.dist.html, `../css/app.css`, `../js/app.js`);
+gulp.Html('html', `${config.paths.src.html}/*`, config.paths.dist.html, '../css/app.css', '../js/app.js');
 
 // Compile Sass
 gulp.Sass('sass', `${config.paths.src.sass}/**/*.scss`, `${config.paths.dist.css}/`, 'app.css');
 
 // Complile JS
-gulp.Browserify('browserify', `${config.paths.src.js}/scripts.js`, `${config.paths.dist.js}/`, 'app.js', ['babelify','vueify']);
+gulp.Browserify('browserify', `${config.paths.src.js}/scripts.js`, `${config.paths.dist.js}/`, 'app.js', ['babelify', 'vueify']);
 
 // Lint ES6
 gulp.Eslint('eslint', `${config.paths.src.js}/**/*.{js,vue}`, `${config.paths.src.js}/vendor/**`, '.eslintrc');
@@ -33,7 +33,7 @@ gulp.Default(['copy', 'scsslint', 'sass', 'eslint', 'browserify', 'html']);
 
 // Watch Task
 gulp.Watch([], [
-  { path: `${config.paths.src.js}/**/*.{js,vue}`, tasks: ['eslint','browserify'] },
-  { path: `${config.paths.src.sass}/**/*.scss`, tasks: ['scsslint','sass'] },
+  { path: `${config.paths.src.js}/**/*.{js,vue}`, tasks: ['eslint', 'browserify'] },
+  { path: `${config.paths.src.sass}/**/*.scss`, tasks: ['scsslint', 'sass'] },
   { path: `${config.paths.src.html}/**/*.html`, tasks: ['html'] }
 ]);

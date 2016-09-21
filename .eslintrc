@@ -7,10 +7,14 @@
   "rules": {
     "semi": 2,
     "no-console": ["warn", allow: ["warn","error"] ],
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "new-cap": "off",
+    "comma-dangle": ["warn", "never"],
+    "no-multi-spaces": ["warn", { "exceptions": { "ImportDeclaration": true } }],
+    "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
+    "import/no-named-as-default-member": "off"
   },
   "plugins": [
     "html"
   ],
 }
-

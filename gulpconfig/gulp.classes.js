@@ -9,7 +9,7 @@ import watchify       from 'watchify';
 import sass           from 'gulp-sass';
 import less           from 'gulp-less';
 import size           from 'gulp-size';
-import gutil          from "gulp-util";
+import gutil          from 'gulp-util';
 import browserify     from 'browserify';
 import shell          from 'gulp-shell';
 import watch          from 'gulp-watch';
@@ -47,21 +47,21 @@ import config         from './gulp.config.json';
  */
 export const Copy = (taskName, copyTasks) => {
   gulp.task(taskName, () => {
-    for(let copyTask of copyTasks){
+    for (const copyTask of copyTasks) {
       gulp.src(copyTask.src)
       .on('error', gutil.log)
       .pipe(gulp.dest(copyTask.dest))
       .pipe(notify({
         title: config.name,
-        subtitle: 'Gulp',
-        message: `Finished ${taskName}`,
+        subtitle: `Finished ${taskName}`,
+        message: 'Files Copied',
         icon: config.icon,
         sound: false,
         onLast: true
       }));
     }
   });
-}
+};
 
 /**
  * HTML Task - Replace JS / CSS Links Dependent on Env
@@ -73,24 +73,25 @@ export const Copy = (taskName, copyTasks) => {
  * @param jsFilePath : string
  */
 export const Html = (taskName, src, dest, cssFilePath, jsFilePath) => {
-  let devOptions = { css: cssFilePath, js: jsFilePath };
-  let prodOptions = { css: cssFilePath.split('.css')[0]+'.min.css', js: jsFilePath.split('.js')[0]+'.min.js' };
+  const devOptions = { css: cssFilePath, js: jsFilePath };
+  const prodOptions = { css: `${cssFilePath.split('.css')[0]}.min.css`, js: `${jsFilePath.split('.js')[0]}.min.js` };
   gulp.task(taskName, () => {
     gulp.src(src)
     .on('error', gutil.log)
     .pipe(gutil.env.production ? htmlreplace(prodOptions) : htmlreplace(devOptions))
-    .pipe(gutil.env.production ? htmlmin({collapseWhitespace: true}) : gutil.noop())
+    .pipe(gutil.env.production ? htmlmin({ collapseWhitespace: true }) : gutil.noop())
     .pipe(gulp.dest(dest))
+    .pipe(size())
     .pipe(notify({
       title: config.name,
-      subtitle: 'Gulp',
-      message: `Finished ${taskName}`,
+      subtitle: `Finished ${taskName}`,
+      message: 'HTML Compiled',
       icon: config.icon,
       sound: false,
       onLast: true
     }));
   });
-}
+};
 
 /**
  * Sass Task
@@ -110,43 +111,49 @@ export const Sass = (taskName, src, dest, outputFileName) => {
     }))
     .pipe(gutil.env.production ? gutil.noop() : sourcemaps.init())
     .pipe(gutil.env.production ? cleancss() : gutil.noop())
-    .pipe(gutil.env.production ? rename(outputFileName.split('.css')[0]+'.min.css') : rename(outputFileName))
+    .pipe(gutil.env.production ? rename(`${outputFileName.split('.css')[0]}.min.css`) : rename(outputFileName))
     .pipe(gutil.env.production ? gutil.noop() : sourcemaps.write('./'))
     .pipe(gulp.dest(dest))
     .pipe(size())
     .pipe(notify({
       title: config.name,
-      subtitle: 'Gulp',
-      message: `Finished ${taskName}`,
+      subtitle: `Finished ${taskName}`,
+      message: 'Sass Compiled',
       icon: config.icon,
       sound: false,
       onLast: true
     }));
   });
-}
+};
 
-
+/**
+ * Less Task
+ * @param taskName      : string
+ * @param src           : string
+ * @param dest          : string
+ * @param outputFileName: string
+ */
 export const Less = (taskName, src, dest, outputFileName) => {
   gulp.task(taskName, () => {
     gulp.src(src)
     .on('error', gutil.log)
-    .pipe(less().on('error',gutil.log))
+    .pipe(less().on('error', gutil.log))
     .pipe(gutil.env.production ? gutil.noop() : sourcemaps.init())
     .pipe(gutil.env.production ? cleancss() : gutil.noop())
-    .pipe(gutil.env.production ? rename(outputFileName.split('.css')[0]+'.min.css') : rename(outputFileName))
+    .pipe(gutil.env.production ? rename(`${outputFileName.split('.css')[0]}.min.css`) : rename(outputFileName))
     .pipe(gutil.env.production ? gutil.noop() : sourcemaps.write('./'))
     .pipe(gulp.dest(dest))
     .pipe(size())
     .pipe(notify({
       title: config.name,
-      subtitle: 'Gulp',
-      message: `Finished ${taskName}`,
+      subtitle: `Finished ${taskName}`,
+      message: 'Less Compiled',
       icon: config.icon,
       sound: false,
       onLast: true
     }));
   });
-}
+};
 
 
 /**
@@ -160,12 +167,12 @@ export const Less = (taskName, src, dest, outputFileName) => {
 export const Browserify = (taskName, src, dest, outputFileName, plugins) => {
   gulp.task(taskName, () => {
     const bundler = browserify({ debug: true, entries: src });
-    for(let plugin of plugins){
+    for (const plugin of plugins) {
       bundler.transform(plugin);
     }
     bundler.bundle()
     .on('error', gutil.log)
-    .pipe(gutil.env.production ? source(`${dest}/${outputFileName.split('.js')[0]+'.min.js'}`) : source(`${dest}/${outputFileName}`))
+    .pipe(gutil.env.production ? source(`${dest}/${outputFileName.split('.js')[0]}.min.js`) : source(`${dest}/${outputFileName}`))
     .pipe(buffer())
     .pipe(gutil.env.production ? uglify() : gutil.noop())
     .pipe(gutil.env.production ? gutil.noop() : sourcemaps.init())
@@ -174,14 +181,39 @@ export const Browserify = (taskName, src, dest, outputFileName, plugins) => {
     .pipe(gulp.dest(''))
     .pipe(notify({
       title: config.name,
-      subtitle: 'Gulp',
-      message: `Finished ${taskName}`,
+      subtitle: `Finished ${taskName}`,
+      message: 'JS Compiled',
       icon: config.icon,
       sound: false,
       onLast: true
     }));
   });
-}
+};
+
+
+/**
+* ES6 Linter
+* @param taskName : string
+* @param src      : string
+* @param exclude  : string
+* @param configSrc: string
+*/
+export const Eslint = (taskName, src, exclude, configSrc) => {
+  gulp.task(taskName, () => {
+    gulp.src([src, '!node_modules/**', `!${exclude}`])
+    .pipe(eslint(configSrc))
+    .pipe(eslint.format())
+    .pipe(notify({
+      title: config.name,
+      subtitle: `Finished ${taskName}`,
+      message: 'ES Lint Completed',
+      icon: config.icon,
+      sound: false,
+      onLast: true
+    }));
+  });
+};
+
 
 /**
  * Typescript Linter
@@ -194,41 +226,17 @@ export const Tslint = (taskName, src, exclude, configSrc) => {
   gulp.task(taskName, () => {
     gulp.src([src, `!${exclude}`])
     .pipe(tslint({ configuration: configSrc }))
-    .pipe(tslint.report("verbose"))
+    .pipe(tslint.report('verbose'))
     .pipe(notify({
       title: config.name,
-      subtitle: 'Gulp',
-      message: `Finished ${taskName}`,
+      subtitle: `Finished ${taskName}`,
+      message: 'Ts Lint Completed',
       icon: config.icon,
       sound: false,
       onLast: true
     }));
   });
-}
-
-/**
- * ES6 Linter
- * @param taskName : string
- * @param src      : string
- * @param exclude  : string
- * @param configSrc: string
- */
-export const Eslint = (taskName, src, exclude, configSrc) => {
-  gulp.task(taskName, () => {
-    return gulp.src([src, '!node_modules/**', `!${exclude}`])
-      .pipe(eslint(configSrc))
-      .pipe(eslint.format())
-      // .pipe(eslint.failAfterError())
-      .pipe(notify({
-        title: config.name,
-        subtitle: 'Gulp',
-        message: `Finished ${taskName}`,
-        icon: config.icon,
-        sound: false,
-        onLast: true
-      }));
-  });
-}
+};
 
 
 /**
@@ -243,17 +251,17 @@ export const Scsslint = (taskName, src, exclude, configSrc) => {
     const scssfilter = gulpfilter(exclude);
     gulp.src(src)
     .pipe(scssfilter)
-    .pipe(scsslint({ 'config': configSrc, 'maxBuffer': 307200 }))
+    .pipe(scsslint({ config: configSrc }))
     .pipe(notify({
       title: config.name,
-      subtitle: 'Gulp',
-      message: `Finished ${taskName}`,
+      subtitle: `Finished ${taskName}`,
+      message: 'Scss Lint Completed',
       icon: config.icon,
       sound: false,
       onLast: true
     }));
   });
-}
+};
 
 
 /**
@@ -267,12 +275,20 @@ export const Sasslint = (taskName, src, exclude, configSrc) => {
   gulp.task(taskName, () => {
     gulp.src(src)
     .pipe(sasslint({
-      files: {ignore: exclude},
+      files: { ignore: exclude },
       config: configSrc
     }))
-    .pipe(sasslint.format());
+    .pipe(sasslint.format())
+    .pipe(notify({
+      title: config.name,
+      subtitle: `Finished ${taskName}`,
+      message: 'Sass Lint Completed',
+      icon: config.icon,
+      sound: false,
+      onLast: true
+    }));
   });
-}
+};
 
 /**
  * Watch Task
@@ -281,11 +297,11 @@ export const Sasslint = (taskName, src, exclude, configSrc) => {
  */
 export const Watch = (tasksToRun, tasksToWatch) => {
   gulp.task('watch', tasksToRun, () => {
-    for(let task of tasksToWatch){
+    for (const task of tasksToWatch) {
       gulp.watch(task.path, task.tasks);
     }
   });
-}
+};
 
 /**
  * Clean Task (Cleans Files)
@@ -295,8 +311,8 @@ export const Watch = (tasksToRun, tasksToWatch) => {
 export const Clean = (taskName, paths) => {
   gulp.task(taskName, () => {
     del(paths);
-  })
-}
+  });
+};
 
 /**
  * Default Task
@@ -304,7 +320,7 @@ export const Clean = (taskName, paths) => {
  */
 export const Default = (taskNames) => {
   gulp.task('default', taskNames);
-}
+};
 
 
 export default {
@@ -320,4 +336,4 @@ export default {
   Scsslint,
   Sasslint,
   Browserify
-}
+};
