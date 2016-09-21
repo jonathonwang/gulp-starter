@@ -1,7 +1,6 @@
 {
   "name": "Gulp-Starter",
   "icon": "",
-  "production": false,
 
   "paths": {
     "src" : {
