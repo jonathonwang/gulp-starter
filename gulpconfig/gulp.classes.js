@@ -7,6 +7,7 @@ import tsify          from 'tsify';
 import vueify         from 'vueify';
 import watchify       from 'watchify';
 import sass           from 'gulp-sass';
+import less           from 'gulp-less';
 import size           from 'gulp-size';
 import gutil          from "gulp-util";
 import browserify     from 'browserify';
@@ -123,6 +124,30 @@ export const Sass = (taskName, src, dest, outputFileName) => {
     }));
   });
 }
+
+
+export const Less = (taskName, src, dest, outputFileName) => {
+  gulp.task(taskName, () => {
+    gulp.src(src)
+    .on('error', gutil.log)
+    .pipe(less().on('error',gutil.log))
+    .pipe(gutil.env.production ? gutil.noop() : sourcemaps.init())
+    .pipe(gutil.env.production ? cleancss() : gutil.noop())
+    .pipe(gutil.env.production ? rename(outputFileName.split('.css')[0]+'.min.css') : rename(outputFileName))
+    .pipe(gutil.env.production ? gutil.noop() : sourcemaps.write('./'))
+    .pipe(gulp.dest(dest))
+    .pipe(size())
+    .pipe(notify({
+      title: config.name,
+      subtitle: 'Gulp',
+      message: `Finished ${taskName}`,
+      icon: config.icon,
+      sound: false,
+      onLast: true
+    }));
+  });
+}
+
 
 /**
  * Browserify Task
@@ -286,6 +311,7 @@ export default {
   Copy,
   Html,
   Sass,
+  Less,
   Clean,
   Watch,
   Tslint,
