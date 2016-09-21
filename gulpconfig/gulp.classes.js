@@ -19,6 +19,7 @@ import uglify         from 'gulp-uglify';
 import notify         from 'gulp-notify';
 import tslint         from 'gulp-tslint';
 import eslint         from 'gulp-eslint';
+import htmlmin        from 'gulp-htmlmin';
 import browserSync    from 'browser-sync';
 import buffer         from 'vinyl-buffer';
 import filesize       from 'gulp-filesize';
@@ -75,6 +76,7 @@ export const Html = (taskName, src, dest, cssFilePath, jsFilePath) => {
     gulp.src(src)
     .on('error', gutil.log)
     .pipe(gutil.env.production ? htmlreplace(prodOptions) : htmlreplace(devOptions))
+    .pipe(gutil.env.production ? htmlmin({collapseWhitespace: true}) : gutil.noop())
     .pipe(gulp.dest(dest))
     .pipe(notify({
       title: config.name,
