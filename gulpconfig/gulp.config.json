@@ -4,17 +4,6 @@
   "production": false,
 
   "paths": {
-    "vendor": {
-      "bootstrap": {
-        "sass": "./node_modules/bootstrap-sass/assets/stylesheets",
-        "js": "./node_modules/bootstrap-sass/assets/javascripts"
-      },
-      "jquery": "./node_modules/jquery/dist/jquery.min.js",
-      "fontawesome": {
-        "sass": "./node_modules/font-awesome/scss",
-        "fonts": "./node_modules/font-awesome/fonts"
-      }
-    },
     "src" : {
       "js": "./src/js",
       "sass": "./src/sass",
@@ -25,6 +14,17 @@
       "css": "./dist/css",
       "html": "./dist/html",
       "fonts": "./dist/fonts"
+    },
+    "vendor": {
+      "bootstrap": {
+        "sass": "./node_modules/bootstrap-sass/assets/stylesheets",
+        "js": "./node_modules/bootstrap-sass/assets/javascripts"
+      },
+      "jquery": "./node_modules/jquery/dist/jquery.min.js",
+      "fontawesome": {
+        "sass": "./node_modules/font-awesome/scss",
+        "fonts": "./node_modules/font-awesome/fonts"
+      }
     }
   }
 }
