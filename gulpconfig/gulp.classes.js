@@ -27,11 +27,11 @@ import scsslint       from 'gulp-scss-lint';
 import sasslint       from 'gulp-sass-lint';
 import sourcemaps     from 'gulp-sourcemaps';
 import ts             from 'gulp-typescript';
-import autoprefixer   from 'gulp-autoprefixer';
 import combiner       from 'stream-combiner2';
+import autoprefixer   from 'gulp-autoprefixer';
+import htmlreplace    from 'gulp-html-replace';
 import source         from 'vinyl-source-stream';
 import moduleimporter from 'sass-module-importer';
-
 /**
  * Gulp Configuration
  */
@@ -61,10 +61,38 @@ export const Copy = (taskName, copyTasks) => {
 }
 
 /**
+ * HTML Replace JS / CSS Links Task
+ * @param taskName:  : string
+ * @param src        : string
+ * @param dest       : string
+ * @param cssFilePath: string
+ * @param jsFilePath : string
+ */
+export const Html = (taskName, src, dest, cssFilePath, jsFilePath) => {
+  let devOptions = { css: cssFilePath, js: jsFilePath };
+  let prodOptions = { css: cssFilePath.split('.css')[0]+'.min.css', js: jsFilePath.split('.js')[0]+'.min.js' };
+  gulp.task(taskName, () => {
+    gulp.src(src)
+    .on('error', gutil.log)
+    .pipe(gutil.env.production ? htmlreplace(prodOptions) : htmlreplace(devOptions))
+    .pipe(gulp.dest(dest))
+    .pipe(notify({
+      title: config.name,
+      subtitle: 'Gulp',
+      message: `Finished ${taskName}`,
+      icon: config.icon,
+      sound: false,
+      onLast: true
+    }));
+  });
+}
+
+/**
  * Sass Task
- * @param taskName: string
- * @param src     : string
- * @param dest    : string
+ * @param taskName      : string
+ * @param src           : string
+ * @param dest          : string
+ * @param outputFileName: string
  */
 export const Sass = (taskName, src, dest, outputFileName) => {
   gulp.task(taskName, () => {
@@ -94,11 +122,11 @@ export const Sass = (taskName, src, dest, outputFileName) => {
 
 /**
  * Browserify Task
- * @param taskName: string
- * @param src: Array<string> | string
- * @param dest: string
+ * @param taskName      : string
+ * @param src           : Array<string> | string
+ * @param dest          : string
  * @param outputFileName: string
- * @param plugins: Array<string>
+ * @param plugins       : Array<string>
  */
 export const Browserify = (taskName, src, dest, outputFileName, plugins) => {
   gulp.task(taskName, () => {
@@ -198,6 +226,7 @@ export const Scsslint = (taskName, src, exclude, configSrc) => {
   });
 }
 
+
 /**
  * SASS Linter
  * @param taskName : string
@@ -251,6 +280,7 @@ export const Default = (taskNames) => {
 
 export default {
   Copy,
+  Html,
   Sass,
   Clean,
   Watch,

@@ -1,5 +1,5 @@
 {
-  "name": "Gulp",
+  "name": "Gulp-Starter",
   "icon": "gulp-icon.png",
   "production": false,
 
@@ -17,12 +17,13 @@
     },
     "src" : {
       "js": "./src/js",
-      "sass": "./src/sass"
+      "sass": "./src/sass",
+      "html": "./src/html"
     },
     "dist": {
       "js": "./dist/js",
       "css": "./dist/css",
-      "html": "./html/**/*.html",
+      "html": "./dist/html",
       "fonts": "./dist/fonts"
     }
   }
