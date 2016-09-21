@@ -11,10 +11,10 @@ gulp.Copy('copy', [
 ]);
 
 // Compile Sass
-gulp.Sass('sass', `${config.paths.src.sass}/**/*.scss`, `${config.paths.dist.css}`);
+gulp.Sass('sass', `${config.paths.src.sass}/**/*.scss`, `${config.paths.dist.css}/`, 'app.css');
 
 // Complile JS
-gulp.Browserify('browserify', `${config.paths.src.js}/scripts.js`, `${config.paths.dist.js}/app.js`, ['babelify','vueify']);
+gulp.Browserify('browserify', `${config.paths.src.js}/scripts.js`, `${config.paths.dist.js}/`, 'app.js', ['babelify','vueify']);
 
 // Lint ES6
 gulp.Eslint('eslint', `${config.paths.src.js}/**/*.{js,vue}`, `${config.paths.src.js}/vendor/**`, '.eslintrc');

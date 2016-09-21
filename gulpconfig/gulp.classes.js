@@ -12,6 +12,7 @@ import gutil          from "gulp-util";
 import browserify     from 'browserify';
 import shell          from 'gulp-shell';
 import watch          from 'gulp-watch';
+import rename         from 'gulp-rename';
 import concat         from 'gulp-concat';
 import gulpfilter     from 'gulp-filter';
 import uglify         from 'gulp-uglify';
@@ -65,7 +66,7 @@ export const Copy = (taskName, copyTasks) => {
  * @param src     : string
  * @param dest    : string
  */
-export const Sass = (taskName, src, dest) => {
+export const Sass = (taskName, src, dest, outputFileName) => {
   gulp.task(taskName, () => {
     gulp.src(src)
     .on('error', gutil.log)
@@ -74,9 +75,10 @@ export const Sass = (taskName, src, dest) => {
       browsers: ['last 2 versions'],
       cascade: false
     }))
-    .pipe(sourcemaps.init())
-    .pipe(cleancss())
-    .pipe(sourcemaps.write())
+    .pipe(gutil.env.production ? gutil.noop() : sourcemaps.init())
+    .pipe(gutil.env.production ? cleancss() : gutil.noop())
+    .pipe(gutil.env.production ? rename(outputFileName.split('.css')[0]+'.min.css') : rename(outputFileName))
+    .pipe(gutil.env.production ? gutil.noop() : sourcemaps.write('./'))
     .pipe(gulp.dest(dest))
     .pipe(size())
     .pipe(notify({
@@ -93,12 +95,12 @@ export const Sass = (taskName, src, dest) => {
 /**
  * Browserify Task
  * @param taskName: string
- * @param src     : Array<string> | string
- * @param dest    : string
- * @param dist    : string
- * @param plugins : Array<string> | string
+ * @param src: Array<string> | string
+ * @param dest: string
+ * @param outputFileName: string
+ * @param plugins: Array<string>
  */
-export const Browserify = (taskName, src, dest, plugins) => {
+export const Browserify = (taskName, src, dest, outputFileName, plugins) => {
   gulp.task(taskName, () => {
     const bundler = browserify({ debug: true, entries: src });
     for(let plugin of plugins){
@@ -106,11 +108,11 @@ export const Browserify = (taskName, src, dest, plugins) => {
     }
     bundler.bundle()
     .on('error', gutil.log)
-    .pipe(source(dest))
+    .pipe(gutil.env.production ? source(`${dest}/${outputFileName.split('.js')[0]+'.min.js'}`) : source(`${dest}/${outputFileName}`))
     .pipe(buffer())
-    .pipe(sourcemaps.init({ loadMaps: config.production == true ? false : true }))
-    .pipe(sourcemaps.write('./'))
-    // .pipe(uglify().on('error', gutil.log));
+    .pipe(gutil.env.production ? uglify() : gutil.noop())
+    .pipe(gutil.env.production ? gutil.noop() : sourcemaps.init())
+    .pipe(gutil.env.production ? gutil.noop() : sourcemaps.write('./'))
     .pipe(size())
     .pipe(gulp.dest(''))
     .pipe(notify({
