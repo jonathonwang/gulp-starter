@@ -1,34 +1,35 @@
 /**
  * NPM Dependencies
  */
-import del          from 'del';
-import gulp         from 'gulp';
-import tsify        from 'tsify';
-import vueify       from 'vueify';
-import watchify     from 'watchify';
-import sass         from 'gulp-sass';
-import size         from 'gulp-size';
-import gutil        from "gulp-util";
-import browserify   from 'browserify';
-import shell        from 'gulp-shell';
-import watch        from 'gulp-watch';
-import concat       from 'gulp-concat';
-import gulpfilter   from 'gulp-filter';
-import uglify       from 'gulp-uglify';
-import notify       from 'gulp-notify';
-import tslint       from 'gulp-tslint';
-import eslint       from 'gulp-eslint';
-import browserSync  from 'browser-sync';
-import buffer       from 'vinyl-buffer';
-import filesize     from 'gulp-filesize';
-import cleancss     from 'gulp-clean-css';
-import scsslint     from 'gulp-scss-lint';
-import sasslint     from 'gulp-sass-lint';
-import sourcemaps   from 'gulp-sourcemaps';
-import ts           from 'gulp-typescript';
-import autoprefixer from 'gulp-autoprefixer';
-import combiner     from 'stream-combiner2';
-import source       from 'vinyl-source-stream';
+import del            from 'del';
+import gulp           from 'gulp';
+import tsify          from 'tsify';
+import vueify         from 'vueify';
+import watchify       from 'watchify';
+import sass           from 'gulp-sass';
+import size           from 'gulp-size';
+import gutil          from "gulp-util";
+import browserify     from 'browserify';
+import shell          from 'gulp-shell';
+import watch          from 'gulp-watch';
+import concat         from 'gulp-concat';
+import gulpfilter     from 'gulp-filter';
+import uglify         from 'gulp-uglify';
+import notify         from 'gulp-notify';
+import tslint         from 'gulp-tslint';
+import eslint         from 'gulp-eslint';
+import browserSync    from 'browser-sync';
+import buffer         from 'vinyl-buffer';
+import filesize       from 'gulp-filesize';
+import cleancss       from 'gulp-clean-css';
+import scsslint       from 'gulp-scss-lint';
+import sasslint       from 'gulp-sass-lint';
+import sourcemaps     from 'gulp-sourcemaps';
+import ts             from 'gulp-typescript';
+import autoprefixer   from 'gulp-autoprefixer';
+import combiner       from 'stream-combiner2';
+import source         from 'vinyl-source-stream';
+import moduleimporter from 'sass-module-importer';
 
 import config       from './gulp.config.json';
 
@@ -61,22 +62,20 @@ export const Copy = (taskName, copyTasks) => {
  * @param src     : string
  * @param dest    : string
  */
-export const Sass = (taskName, src, exclude, dest) => {
-  const scssfilter = gulpfilter(exclude);
+export const Sass = (taskName, src, dest) => {
   gulp.task(taskName, () => {
     gulp.src(src)
     .on('error', gutil.log)
-    .pipe(sass().on('error', sass.logError))
-    .pipe(scssfilter)
-    .pipe(sourcemaps.init({ loadMaps: config.production == true ? false : true }))
+    .pipe(sass({ importer: moduleimporter() }).on('error', sass.logError))
     .pipe(autoprefixer({
       browsers: ['last 2 versions'],
       cascade: false
     }))
+    .pipe(sourcemaps.init())
     .pipe(cleancss())
     .pipe(sourcemaps.write())
-    .pipe(size())
     .pipe(gulp.dest(dest))
+    .pipe(size())
     .pipe(notify({
       title: config.name,
       subtitle: 'Gulp',
@@ -148,11 +147,12 @@ export const Tslint = (taskName, src, configSrc) => {
  * ES6 Linter
  * @param taskName : string
  * @param src      : string
+ * @param exclude  : string
  * @param configSrc: string
  */
 export const Eslint = (taskName, src, exclude, configSrc) => {
   gulp.task(taskName, () => {
-    return gulp.src([src, '!node_modules/**', exclude])
+    return gulp.src([src, '!node_modules/**', `!${exclude}`])
       .pipe(eslint(configSrc))
       .pipe(eslint.format())
       // .pipe(eslint.failAfterError())
@@ -193,7 +193,7 @@ export const Scsslint = (taskName, src, exclude, configSrc) => {
 }
 
 /**
- * SCSS Linter
+ * SASS Linter
  * @param taskName : string
  * @param src      : string
  * @param exclude  : string

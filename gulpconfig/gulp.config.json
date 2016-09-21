@@ -1,6 +1,6 @@
 {
   "name": "Gulp",
-  "icon": "./gulp-icon.png",
+  "icon": "gulp-icon.png",
   "production": false,
 
   "paths": {
@@ -16,13 +16,14 @@
       }
     },
     "src" : {
-      "js"  : "./src/js",
+      "js": "./src/js",
       "sass": "./src/sass"
     },
     "dist": {
-      "js"  : "./dist/js",
-      "css" : "./dist/css",
-      "html": "./html/**/*.html"
+      "js": "./dist/js",
+      "css": "./dist/css",
+      "html": "./html/**/*.html",
+      "fonts": "./dist/fonts"
     }
   }
 }
