@@ -17,13 +17,13 @@ gulp.Sass('sass', `${config.paths.src.sass}/**/*.scss`, `${config.paths.dist.css
 gulp.Browserify('browserify', `${config.paths.src.js}/scripts.js`, `${config.paths.dist.js}/app.js`, ['babelify','vueify']);
 
 // Lint ES6
-gulp.Eslint('eslint', `${config.paths.src.js}/**/*.{js,vue}`, `${config.paths.src.js}/vendor/**`, './.eslintrc');
+gulp.Eslint('eslint', `${config.paths.src.js}/**/*.{js,vue}`, `${config.paths.src.js}/vendor/**`, '.eslintrc');
 
 // Lint Scss
 gulp.Scsslint('scsslint', `${config.paths.src.sass}/**/*.scss`, `${config.paths.src.sass}/vendor/**/*.scss`, '.scss-lint.yml');
 
 // Clean Dist Folder
-gulp.Clean('clean', [`${config.paths.dist.css}/**/*`, `${config.paths.dist.js}/**/*`, `${config.paths.dist.fonts}/**/*`, `${config.paths.src.js}/vendor`, `${config.paths.src.sass}/vendor`]);
+gulp.Clean('clean', [`${config.paths.dist.css}/**/*`, `${config.paths.dist.js}/**/*`, `${config.paths.dist.fonts}/**/*`]);
 
 // Default Task
 gulp.Default(['copy', 'sass', 'scsslint', 'eslint', 'browserify']);

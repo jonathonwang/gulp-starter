@@ -31,7 +31,10 @@ import combiner       from 'stream-combiner2';
 import source         from 'vinyl-source-stream';
 import moduleimporter from 'sass-module-importer';
 
-import config       from './gulp.config.json';
+/**
+ * Gulp Configuration
+ */
+import config         from './gulp.config.json';
 
 /**
  * Copy Task
@@ -125,11 +128,12 @@ export const Browserify = (taskName, src, dest, plugins) => {
  * Typescript Linter
  * @param taskName : string
  * @param src      : string
+ * @param exclude  : string
  * @param configSrc: string
  */
-export const Tslint = (taskName, src, configSrc) => {
+export const Tslint = (taskName, src, exclude, configSrc) => {
   gulp.task(taskName, () => {
-    gulp.src(src)
+    gulp.src([src, `!${exclude}`])
     .pipe(tslint({ configuration: configSrc }))
     .pipe(tslint.report("verbose"))
     .pipe(notify({
