@@ -62,7 +62,8 @@ export const Copy = (taskName, copyTasks) => {
 }
 
 /**
- * HTML Replace JS / CSS Links Task
+ * HTML Task - Replace JS / CSS Links Dependent on Env
+ * Also Minifies HTML for Production
  * @param taskName:  : string
  * @param src        : string
  * @param dest       : string
