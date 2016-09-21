@@ -23,7 +23,6 @@ import eslint         from 'gulp-eslint';
 import htmlmin        from 'gulp-htmlmin';
 import browserSync    from 'browser-sync';
 import buffer         from 'vinyl-buffer';
-import filesize       from 'gulp-filesize';
 import cleancss       from 'gulp-clean-css';
 import scsslint       from 'gulp-scss-lint';
 import sasslint       from 'gulp-sass-lint';
@@ -81,7 +80,7 @@ export const Html = (taskName, src, dest, cssFilePath, jsFilePath) => {
     .pipe(gutil.env.production ? htmlreplace(prodOptions) : htmlreplace(devOptions))
     .pipe(gutil.env.production ? htmlmin({ collapseWhitespace: true }) : gutil.noop())
     .pipe(gulp.dest(dest))
-    .pipe(size())
+    .pipe(size({ title: 'HTML:', showFiles: true, pretty: true }))
     .pipe(notify({
       title: config.name,
       subtitle: `Finished ${taskName}`,
@@ -114,7 +113,7 @@ export const Sass = (taskName, src, dest, outputFileName) => {
     .pipe(gutil.env.production ? rename(`${outputFileName.split('.css')[0]}.min.css`) : rename(outputFileName))
     .pipe(gutil.env.production ? gutil.noop() : sourcemaps.write('./'))
     .pipe(gulp.dest(dest))
-    .pipe(size())
+    .pipe(size({ title: 'SASS:', showFiles: true, pretty: true }))
     .pipe(notify({
       title: config.name,
       subtitle: `Finished ${taskName}`,
@@ -143,7 +142,7 @@ export const Less = (taskName, src, dest, outputFileName) => {
     .pipe(gutil.env.production ? rename(`${outputFileName.split('.css')[0]}.min.css`) : rename(outputFileName))
     .pipe(gutil.env.production ? gutil.noop() : sourcemaps.write('./'))
     .pipe(gulp.dest(dest))
-    .pipe(size())
+    .pipe(size({ title: 'LESS:', showFiles: true, pretty: true }))
     .pipe(notify({
       title: config.name,
       subtitle: `Finished ${taskName}`,
@@ -177,8 +176,8 @@ export const Browserify = (taskName, src, dest, outputFileName, plugins) => {
     .pipe(gutil.env.production ? uglify() : gutil.noop())
     .pipe(gutil.env.production ? gutil.noop() : sourcemaps.init())
     .pipe(gutil.env.production ? gutil.noop() : sourcemaps.write('./'))
-    .pipe(size())
     .pipe(gulp.dest(''))
+    .pipe(size({ title: 'JS:', showFiles: true, pretty: true }))
     .pipe(notify({
       title: config.name,
       subtitle: `Finished ${taskName}`,
