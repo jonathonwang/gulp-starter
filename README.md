@@ -61,6 +61,7 @@ Parameters:
 Note:
 
 You must have these code blocks in your html to find and replace css && js links.
+Run gulp --production to change it to `app.min.css` && `app.min.js`
 ```
 <!-- build:css -->
 <link rel="stylesheet" href="../dist/css/app.css">
@@ -90,5 +91,10 @@ Parameters:
 * sassPath: string
 * cssOutputPath: string
 * cssOutputFileName: string
+
+Note:
+
+Run gulp --production to minify files and exclude sourcemaps.
+This will create `.min.css` && `.min.js` file extensions.
 
 #### More to come...
