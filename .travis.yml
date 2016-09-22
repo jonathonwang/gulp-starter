@@ -8,5 +8,5 @@ branches:
 before_script:
   - npm install -g gulp
   - npm install
-  - gulp build
-  - gulp style
+  - gulp
+  - gulp --production
