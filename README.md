@@ -18,14 +18,22 @@ __Copy Task:__
 Copies files from one directory to another
 
 ```
-gulp.Copy('copy', [
-  { src: `${config.paths.vendor.fontawesome.fonts}/**/*`, dest: `${config.paths.dist.fonts}` }
-]);
+gulp.Copy(
+  'copy', // taskName
+  [ // files
+    {
+      src: './node_modules/bootstrap-sass/assets/stylesheets/**/*.scss', // fileSrc
+      dest: 'src/sass/vendor/bootstrap' // fileDest
+    }
+  ]
+);
 ```
 
 Parameters:
 * taskName: string
 * files: Array of Objects with src and dest attributes
+* fileSrc: string
+* fileDest: string
 
 Pretty Self-Explanatory. The more objects you add, the more it will copy.
 
@@ -36,15 +44,21 @@ __Html Task:__
 Swaps out script and css links depending on environment && minifies files.
 
 ```
-gulp.Html('html', `${config.paths.src.html}/*`, config.paths.dist.html, '../css/app.css', '../js/app.js');
+gulp.Html(
+  'html', // taskName
+  'src/html/**/*', // htmlSource
+  'dist/html', // htmlOutput
+  '../css/app.css', // compiledCssPath
+  '../js/app.js' // compiledJsPath
+);
 ```
 
 Parameters:
 * taskName: string
 * htmlSource: string
 * htmlOutput: string
-* compiledCssPath: string
-* compiledJsPath: string
+* compiledCssPath: string (relative to output html file)
+* compiledJsPath: string (relative to output html file)
 
 ---
 
@@ -52,7 +66,12 @@ __Sass Task:__
 
 Compiles SASS and minifies SASS with --production flag
 ```
-gulp.Sass('sass', `${config.paths.src.sass}/**/*.scss`, `${config.paths.dist.css}/`, 'app.css');
+gulp.Sass(
+  'sass', // taskName
+  'src/sass/**/*.scss', // sassPath
+  'dist/css/', // cssOutputPath
+  'app.css' // cssOutputFileName
+);
 ```
 
 Parameters:
