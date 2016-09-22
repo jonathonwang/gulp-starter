@@ -1,6 +1,6 @@
 # Gulp-Starter (WIP)
 [![Build Status](https://travis-ci.org/jonathonwang/gulp-starter.svg?branch=master)](https://travis-ci.org/jonathonwang/gulp-starter)
-
+![NPM Status](https://david-dm.org/jonathonwang/gulp-starter.svg)
 
 A repo to get started with gulp really quickly because I dont like having to setup all the piping all the time.
 
