@@ -10,3 +10,4 @@ before_script:
   - npm install
   - gulp
   - gulp --production
+script: gulp
