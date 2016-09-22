@@ -122,3 +122,5 @@ This will create `.min.css` extension on the output CSS file.
 ---
 
 #### More to come...
+
+The documentation tends to fall behind what has actually been  implemented. If you want to see what other tasks this comes with, checkout the `gulpconfig/gulp.classes.js` file.
