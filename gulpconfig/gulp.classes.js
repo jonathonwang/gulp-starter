@@ -161,13 +161,20 @@ export const Less = (taskName, src, dest, outputFileName) => {
  * @param src           : Array<string> | string
  * @param dest          : string
  * @param outputFileName: string
- * @param plugins       : Array<string>
+ * @param plugins       : Array<string> | string
  */
 export const Browserify = (taskName, src, dest, outputFileName, plugins) => {
   gulp.task(taskName, () => {
     const bundler = browserify({ debug: true, entries: src });
-    for (const plugin of plugins) {
-      bundler.transform(plugin);
+    if (plugins !== undefined) {
+      if (typeof plugins === 'object') {
+        for (const plugin of plugins) {
+          bundler.transform(plugin);
+        }
+      }
+      if (typeof plugins === 'string') {
+        bundler.transform(plugins);
+      }
     }
     bundler.bundle()
     .on('error', gutil.log)
