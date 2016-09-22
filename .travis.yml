@@ -10,4 +10,5 @@ before_script:
   - npm install
   - gulp
   - gulp --production
-script: gulp
+  - npm install -g npm-check
+script: npm-check
