@@ -7,7 +7,6 @@ branches:
     - dev
 before_script:
   - npm install -g gulp
-  - npm install
   - gulp
   - gulp --production
   - npm install -g npm-check
