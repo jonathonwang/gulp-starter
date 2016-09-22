@@ -3,6 +3,8 @@ A repo to get started with gulp really quickly because I dont like having to set
 
 It is a very simple wrapper around gulp tasks to get rid of all of that bloat. I aimed to include at least all of the common tasks that I use.
 
+I am considering putting this up as an npm module for easier installation, but for now it will remain in the form of a repo.
+
 ## Getting Started
 __Install__
 
