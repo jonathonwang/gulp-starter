@@ -18,7 +18,7 @@ I am considering putting this up as an npm module for easier installation, but f
 This repo comes pre-packaged with a ton of npm dependencies which can be used by importing the `gulp.classes.js` file into your `gulpfile.js`
 
 Ex:
-```
+```javascript
 import gulp from './gulpconfig/gulp.classes.js';
 ```
 You will then have access to all of the gulp tasks by accessing the imported gulp object: `gulp.Whatevertask`
@@ -29,7 +29,7 @@ __Copy Task:__
 
 Copies files from one directory to another
 
-```
+```javascript
 gulp.Copy(
   'copy', // taskName
   [ // files
@@ -53,7 +53,7 @@ __Html Task:__
 
 Swaps out script and css links depending on environment && minifies files.
 
-```
+```javascript
 gulp.Html(
   'html', // taskName
   'src/html/**/*', // htmlSource
@@ -74,7 +74,7 @@ Note:
 
 You must have these code blocks in your html to find and replace css && js links.
 Run gulp --production to change it to `app.min.css` && `app.min.js`
-```
+```html
 <!-- build:css -->
 <link rel="stylesheet" href="../dist/css/app.css">
 <!-- endbuild -->
@@ -89,7 +89,7 @@ Run gulp --production to change it to `app.min.css` && `app.min.js`
 __Sass Task:__
 
 Compiles SASS and minifies SASS with --production flag
-```
+```javascript
 gulp.Sass(
   'sass', // taskName
   'src/sass/**/*.scss', // sassPath
