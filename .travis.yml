@@ -11,4 +11,4 @@ before_script:
   - gulp
   - gulp --production
   - npm install -g npm-check
-script: npm-check
+script: npm-check --skip-unused
