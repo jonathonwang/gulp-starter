@@ -35,8 +35,6 @@ Parameters:
 * fileSrc: string
 * fileDest: string
 
-Pretty Self-Explanatory. The more objects you add, the more it will copy.
-
 ---
 
 __Html Task:__
@@ -59,6 +57,19 @@ Parameters:
 * htmlOutput: string
 * compiledCssPath: string (relative to output html file)
 * compiledJsPath: string (relative to output html file)
+
+Note:
+
+You must have these code blocks in your html to find and replace css && js links.
+```
+<!-- build:css -->
+<link rel="stylesheet" href="../dist/css/app.css">
+<!-- endbuild -->
+
+<!-- build:js -->
+<script src="../dist/js/app.js"></script>
+<!-- endbuild -->
+```
 
 ---
 
