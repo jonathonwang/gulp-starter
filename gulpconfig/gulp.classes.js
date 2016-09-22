@@ -50,14 +50,14 @@ export const Copy = (taskName, copyTasks) => {
       gulp.src(copyTask.src)
       .on('error', gutil.log)
       .pipe(gulp.dest(copyTask.dest))
-      .pipe(notify({
+      .pipe(gutil.env.type === 'ci' ? notify({
         title: config.name,
         subtitle: `Finished ${taskName}`,
         message: 'Files Copied',
         icon: config.icon,
         sound: false,
         onLast: true
-      }));
+      }) : gutil.noop());
     }
   });
 };
@@ -81,14 +81,14 @@ export const Html = (taskName, src, dest, cssFilePath, jsFilePath) => {
     .pipe(gutil.env.production ? htmlmin({ collapseWhitespace: true }) : gutil.noop())
     .pipe(gulp.dest(dest))
     .pipe(size({ title: 'HTML:', showFiles: true, pretty: true }))
-    .pipe(notify({
+    .pipe(gutil.env.type === 'ci' ? notify({
       title: config.name,
       subtitle: `Finished ${taskName}`,
       message: 'HTML Compiled',
       icon: config.icon,
       sound: false,
       onLast: true
-    }));
+    }) : gutil.noop());
   });
 };
 
@@ -114,14 +114,14 @@ export const Sass = (taskName, src, dest, outputFileName) => {
     .pipe(gutil.env.production ? gutil.noop() : sourcemaps.write('./'))
     .pipe(gulp.dest(dest))
     .pipe(size({ title: 'SASS:', showFiles: true, pretty: true }))
-    .pipe(notify({
+    .pipe(gutil.env.type === 'ci' ? notify({
       title: config.name,
       subtitle: `Finished ${taskName}`,
       message: 'Sass Compiled',
       icon: config.icon,
       sound: false,
       onLast: true
-    }));
+    }) : gutil.noop());
   });
 };
 
@@ -143,14 +143,14 @@ export const Less = (taskName, src, dest, outputFileName) => {
     .pipe(gutil.env.production ? gutil.noop() : sourcemaps.write('./'))
     .pipe(gulp.dest(dest))
     .pipe(size({ title: 'LESS:', showFiles: true, pretty: true }))
-    .pipe(notify({
+    .pipe(gutil.env.type === 'ci' ? notify({
       title: config.name,
       subtitle: `Finished ${taskName}`,
       message: 'Less Compiled',
       icon: config.icon,
       sound: false,
       onLast: true
-    }));
+    }) : gutil.noop());
   });
 };
 
@@ -178,14 +178,14 @@ export const Browserify = (taskName, src, dest, outputFileName, plugins) => {
     .pipe(gutil.env.production ? gutil.noop() : sourcemaps.write('./'))
     .pipe(gulp.dest(''))
     .pipe(size({ title: 'JS:', showFiles: true, pretty: true }))
-    .pipe(notify({
+    .pipe(gutil.env.type === 'ci' ? notify({
       title: config.name,
       subtitle: `Finished ${taskName}`,
       message: 'JS Compiled',
       icon: config.icon,
       sound: false,
       onLast: true
-    }));
+    }) : gutil.noop());
   });
 };
 
@@ -202,14 +202,14 @@ export const Eslint = (taskName, src, exclude, configSrc) => {
     gulp.src([src, '!node_modules/**', `!${exclude}`])
     .pipe(eslint(configSrc))
     .pipe(eslint.format())
-    .pipe(notify({
+    .pipe(gutil.env.type === 'ci' ? notify({
       title: config.name,
       subtitle: `Finished ${taskName}`,
       message: 'ES Lint Completed',
       icon: config.icon,
       sound: false,
       onLast: true
-    }));
+    }) : gutil.noop());
   });
 };
 
@@ -226,14 +226,14 @@ export const Tslint = (taskName, src, exclude, configSrc) => {
     gulp.src([src, `!${exclude}`])
     .pipe(tslint({ configuration: configSrc }))
     .pipe(tslint.report('verbose'))
-    .pipe(notify({
+    .pipe(gutil.env.type === 'ci' ? notify({
       title: config.name,
       subtitle: `Finished ${taskName}`,
       message: 'Ts Lint Completed',
       icon: config.icon,
       sound: false,
       onLast: true
-    }));
+    }) : gutil.noop());
   });
 };
 
@@ -251,14 +251,14 @@ export const Scsslint = (taskName, src, exclude, configSrc) => {
     gulp.src(src)
     .pipe(scssfilter)
     .pipe(scsslint({ config: configSrc }))
-    .pipe(notify({
+    .pipe(gutil.env.type === 'ci' ? notify({
       title: config.name,
       subtitle: `Finished ${taskName}`,
       message: 'Scss Lint Completed',
       icon: config.icon,
       sound: false,
       onLast: true
-    }));
+    }) : gutil.noop());
   });
 };
 
@@ -278,14 +278,14 @@ export const Sasslint = (taskName, src, exclude, configSrc) => {
       config: configSrc
     }))
     .pipe(sasslint.format())
-    .pipe(notify({
+    .pipe(gutil.env.type === 'ci' ? notify({
       title: config.name,
       subtitle: `Finished ${taskName}`,
       message: 'Sass Lint Completed',
       icon: config.icon,
       sound: false,
       onLast: true
-    }));
+    }) : gutil.noop());
   });
 };
 
