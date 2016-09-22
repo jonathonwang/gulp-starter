@@ -12,3 +12,5 @@ before_script:
   - gulp --production
   - npm install -g npm-check
 script: npm-check --skip-unused
+notifications:
+  email: false
