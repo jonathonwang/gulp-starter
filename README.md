@@ -18,6 +18,7 @@ Ex:
 ```
 import gulp from './gulpconfig/gulp.classes.js';
 ```
+You will then have access to all of the gulp tasks by accessing the imported gulp object: `gulp.Whatevertask`
 
 ---
 
