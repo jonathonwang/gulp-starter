@@ -2,8 +2,8 @@
 /**
  * Dependency Imports
  */
-import gulp   from './gulpconfig/gulp.classes.js';
-import config from './gulpconfig/gulp.config.json';
+import gulp   from 'gulp-tasks-scaffold';
+import config from './gulp.config.json';
 
 // Copy Folders / Files
 gulp.Copy('copy', [

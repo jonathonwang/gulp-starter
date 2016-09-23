@@ -1,8 +1,6 @@
 # Gulp-Starter (WIP)
-[![Build Status](https://travis-ci.org/jonathonwang/gulp-starter.svg?branch=master)](https://travis-ci.org/jonathonwang/gulp-starter)
 
-
-A repo to get started with gulp really quickly because I dont like having to setup all the piping all the time.
+Example repo for the npm package __[gulp-tasks-scaffold](https://www.npmjs.com/package/gulp-tasks-scaffold)__
 
 It is a very simple wrapper around gulp tasks to get rid of all of that bloat. I aimed to include at least all of the common tasks that I use.
 
@@ -16,11 +14,11 @@ I am considering putting this up as an npm module for easier installation, but f
 ---
 
 ### How To Use:
-This repo comes pre-packaged with a ton of npm dependencies which can be used by importing the `gulp.classes.js` file into your `gulpfile.js`
+This repo comes pre-packaged with a ton of npm dependencies which can be used by importing the `gulp-tasks-scaffold` npm package into your `gulpfile.js`
 
 Ex:
 ```javascript
-import gulp from './gulpconfig/gulp.classes.js';
+import gulp from 'gulp-tasks-scaffold';
 ```
 You will then have access to all of the gulp tasks by accessing the imported gulp object: `gulp.Whatevertask`
 
@@ -123,4 +121,4 @@ This will create `.min.css` extension on the output CSS file.
 
 #### More to come...
 
-The documentation tends to fall behind what has actually been  implemented. If you want to see what other tasks this comes with, checkout the `gulpconfig/gulp.classes.js` file.
+The documentation tends to fall behind what has actually been  implemented. If you want to see what other tasks this comes with, checkout the `gulpfile.babel.js` file.
