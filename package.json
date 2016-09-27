@@ -10,9 +10,11 @@
   "license": "ISC",
   "devDependencies": {
     "gulp-tasks-scaffold": "^1.2.19",
+    "tslint-microsoft-contrib": "^2.0.12",
     "typings": "^1.4.0"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "bootstrap-sass": "^3.3.7",
     "font-awesome": "^4.6.3",
     "jquery": "^3.1.1",

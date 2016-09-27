@@ -11,6 +11,6 @@ export default {
   data(): ComponentData {
     return {
       testMessage: 'Another Hello World'
-    }
+    };
   }
 };

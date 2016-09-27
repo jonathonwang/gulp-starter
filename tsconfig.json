@@ -12,6 +12,8 @@
   },
   "files": [
     "typings/globals/vue/index.d.ts",
+    "typings/globals/jquery/index.d.ts",
+    "typings/globals/bootstrap/index.d.ts",
     "src/js/example.ts"
   ],
   "exclude": [
