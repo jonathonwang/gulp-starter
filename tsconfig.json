@@ -11,8 +11,8 @@
     "removeComments": true
   },
   "files": [
-    "src/js/example.ts",
-    "typings/globals/vue/index.d.ts"
+    "typings/globals/vue/index.d.ts",
+    "src/js/example.ts"
   ],
   "exclude": [
     "node_modules/*",
