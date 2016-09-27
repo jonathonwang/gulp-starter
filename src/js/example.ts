@@ -1,4 +1,4 @@
-// Vue Import
+// Vue NPM Import
 import * as Vue from 'vue';
 
 // ------------------------------------------------------------
