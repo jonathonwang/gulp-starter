@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gulp-tasks-scaffold": "^1.2.19",
+    "gulp-tasks-scaffold": "^1.2.22",
     "tslint-microsoft-contrib": "^2.0.12",
     "typings": "^1.4.0"
   },
@@ -18,6 +18,6 @@
     "bootstrap-sass": "^3.3.7",
     "font-awesome": "^4.6.3",
     "jquery": "^3.1.1",
-    "vue": "^1.0.27"
+    "vue": "^1.0.28"
   }
 }
