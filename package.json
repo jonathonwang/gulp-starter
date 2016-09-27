@@ -9,11 +9,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gulp-tasks-scaffold": "^1.1.1"
+    "gulp-tasks-scaffold": "^1.2.19",
+    "typings": "^1.4.0"
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.7",
     "font-awesome": "^4.6.3",
-    "jquery": "^3.1.1"
+    "jquery": "^3.1.1",
+    "vue": "^1.0.27"
   }
 }
