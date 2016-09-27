@@ -28,5 +28,5 @@ const app = new Vue({
 });
 
 (() => {
-  $('body').css('background-color', 'blue');
+// Do Stuff Here
 })();
