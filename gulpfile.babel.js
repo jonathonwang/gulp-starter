@@ -17,6 +17,9 @@ gulp.Html('html', `${config.paths.src.html}/*`, config.paths.dist.html, '../css/
 gulp.Sass('sass', `${config.paths.src.sass}/**/*.scss`, `${config.paths.dist.css}/`, 'app.css');
 
 // Complile JS
+// gulp.Browserify('browserify', `${config.paths.src.js}/scripts.js`, `${config.paths.dist.js}/`, 'app.js', ['babelify'], []);
+
+// Compile TS
 gulp.Browserify('browserify', `${config.paths.src.js}/example.ts`, `${config.paths.dist.js}/`, 'app.js', ['babelify'], ['tsify']);
 
 // Lint ES6
