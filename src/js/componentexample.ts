@@ -4,7 +4,7 @@ interface ComponentData {
 
 export default {
   template: `
-    <div class="mycomponent">
+    <div class="mycomponent" v-cloak>
       {{ testMessage }}
     </div>
   `,

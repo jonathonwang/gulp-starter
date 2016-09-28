@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gulp-tasks-scaffold": "^1.2.22",
+    "gulp-tasks-scaffold": "^1.2.26",
     "tslint-microsoft-contrib": "^2.0.12",
     "typings": "^1.4.0"
   },

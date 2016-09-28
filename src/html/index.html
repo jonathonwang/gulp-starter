@@ -65,8 +65,12 @@
     </div><!-- /.container-fluid -->
   </nav>
 
-  <h1><span class="fa fa-bookmark"></span>{{ message }}</h1>
-  <componentexample></componentexample>
+  <div class="container-fluid">
+
+    <h1 v-cloak><span class="fa fa-bookmark"></span> {{ message }}</h1>
+    <componentexample></componentexample>
+
+  </div>
 
   <!-- build:js -->
   <script src="../dist/js/app.js"></script>

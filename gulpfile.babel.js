@@ -14,13 +14,13 @@ gulp.Copy('copy', [
 gulp.Html('html', `${config.paths.src.html}/*`, config.paths.dist.html, '../css/app.css', '../js/app.js');
 
 // Compile Sass
-gulp.Sass('sass', `${config.paths.src.sass}/**/*.scss`, `${config.paths.dist.css}/`, 'app.css');
+gulp.Sass('sass', `${config.paths.src.sass}/**/*.scss`, config.paths.dist.css, 'app.css');
 
 // Complile JS
 // gulp.Browserify('browserify', `${config.paths.src.js}/scripts.js`, `${config.paths.dist.js}/`, 'app.js', ['babelify'], []);
 
 // Compile TS
-gulp.Browserify('browserify', `${config.paths.src.js}/example.ts`, `${config.paths.dist.js}/`, 'app.js', ['babelify'], ['tsify']);
+gulp.Browserify('browserify', `${config.paths.src.js}/example.ts`, config.paths.dist.js, 'app.js', ['babelify'], ['tsify']);
 
 // Lint ES6
 // gulp.Eslint('eslint', `${config.paths.src.js}/**/*.js`, `${config.paths.src.js}/vendor/**`, '.eslintrc');

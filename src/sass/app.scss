@@ -1,3 +1,8 @@
 // Vendor Imports
 @import 'bootstrap-sass';
 @import 'font-awesome';
+
+// Vue cloak on load
+[v-cloak] {
+  display: none;
+}

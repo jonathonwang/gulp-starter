@@ -6,6 +6,7 @@ branches:
     - master
     - dev
 before_script:
+  - typings install
   - npm install -g gulp
   - gulp
   - gulp --production
